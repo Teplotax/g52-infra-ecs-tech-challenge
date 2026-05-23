@@ -82,11 +82,3 @@ resource "aws_vpc_endpoint" "s3" {
 
   route_table_ids   = var.route_table_ids
 }
-
-provider "aws" {
-  region = var.aws_region
-}
-
-terraform {
-  backend "s3" {}
-}
