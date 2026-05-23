@@ -21,7 +21,7 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 }
 
 resource "aws_security_group" "vpc_endpoints" {
-  name   = "vpc-endpoints-sg"
+  name   = "${var.ecs_name}-vpc-endpoints-sg"
   vpc_id = var.vpc_id
 
   ingress {
@@ -81,12 +81,4 @@ resource "aws_vpc_endpoint" "s3" {
   vpc_endpoint_type = "Gateway"
 
   route_table_ids   = var.route_table_ids
-}
-
-provider "aws" {
-  region = var.aws_region
-}
-
-terraform {
-  backend "s3" {}
 }
