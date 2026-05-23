@@ -21,7 +21,7 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
 }
 
 resource "aws_security_group" "vpc_endpoints" {
-  name   = "vpc-${local.project}-endpoints-sg"
+  name   = "${var.ecs_name}-vpc-endpoints-sg"
   vpc_id = var.vpc_id
 
   ingress {
