@@ -51,7 +51,7 @@ resource "aws_ecr_repository" "app" {
   image_tag_mutability = "MUTABLE"
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 
