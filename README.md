@@ -22,7 +22,7 @@ infra/
 ├── variables.tf                   # Declaração de variáveis
 ├── locals.tf                      # Locals e tags
 ├── providers.tf                   # Provider AWS + backend S3
-├── outpouts.tf                    # Outputs: cluster_id e cluster_name
+├── outputs.tf                    # Outputs: cluster_id e cluster_name
 └── inventories/
     └── dev/
         └── terraform.tfvars       # Variáveis do ambiente dev

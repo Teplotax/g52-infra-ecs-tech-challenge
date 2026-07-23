@@ -16,22 +16,6 @@ variable "environment" {
   type = string
 }
 
-variable "vpc_id" {
-  default = ""
-}
-
-variable "cidr_blocks" {
-  type = list(string)
-}
-
-variable "route_table_ids" {
-  type = list(string)
-}
-
-variable "subnet_ids" {
-  type = list(string)
-}
-
 variable "destroy" {
   type    = bool
   default = false
