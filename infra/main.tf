@@ -1,4 +1,3 @@
-# ECS Cluster
 resource "aws_ecs_cluster" "main" {
   name = var.ecs_name
   setting {
@@ -20,27 +19,6 @@ resource "aws_ecs_cluster_capacity_providers" "main" {
   }
 }
 
-resource "aws_security_group" "vpc_endpoints" {
-  name   = "${var.ecs_name}-vpc-endpoints-sg"
-  vpc_id = var.vpc_id
-
-  ingress {
-    description = "Allow HTTPS from VPC"
-    from_port   = 443
-    to_port     = 443
-    protocol    = "tcp"
-    cidr_blocks = var.cidr_blocks
-  }
-
-  egress {
-    description = "Allow all outbound"
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 resource "aws_ecr_repository" "app" {
   name = "grupo52/tech-challenge/${var.ecs_name}"
 
@@ -51,34 +29,20 @@ resource "aws_ecr_repository" "app" {
   image_tag_mutability = "MUTABLE"
 
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 
-resource "aws_vpc_endpoint" "ecr_api" {
-  vpc_id              = var.vpc_id
-  service_name        = "com.amazonaws.${var.aws_region}.ecr.api"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = var.subnet_ids
-  security_group_ids  = [aws_security_group.vpc_endpoints.id]
+resource "aws_ecr_repository" "keycloak" {
+  name = "grupo52/tech-challenge/${var.ecs_name}-keycloak"
 
-  private_dns_enabled = true
-}
+  image_scanning_configuration {
+    scan_on_push = true
+  }
 
-resource "aws_vpc_endpoint" "ecr_dkr" {
-  vpc_id              = var.vpc_id
-  service_name        = "com.amazonaws.${var.aws_region}.ecr.dkr"
-  vpc_endpoint_type   = "Interface"
-  subnet_ids          = var.subnet_ids
-  security_group_ids  = [aws_security_group.vpc_endpoints.id]
+  image_tag_mutability = "MUTABLE"
 
-  private_dns_enabled = true
-}
-
-resource "aws_vpc_endpoint" "s3" {
-  vpc_id            = var.vpc_id
-  service_name      = "com.amazonaws.${var.aws_region}.s3"
-  vpc_endpoint_type = "Gateway"
-
-  route_table_ids   = var.route_table_ids
+  lifecycle {
+    prevent_destroy = false
+  }
 }
