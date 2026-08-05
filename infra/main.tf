@@ -27,6 +27,7 @@ resource "aws_ecr_repository" "app" {
   }
 
   image_tag_mutability = "MUTABLE"
+  force_delete          = true
 
   lifecycle {
     prevent_destroy = false
@@ -41,6 +42,7 @@ resource "aws_ecr_repository" "keycloak" {
   }
 
   image_tag_mutability = "MUTABLE"
+  force_delete          = true
 
   lifecycle {
     prevent_destroy = false
